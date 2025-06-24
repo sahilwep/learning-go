@@ -1,2 +1,0 @@
-# webRTC Go-lang project:
-
