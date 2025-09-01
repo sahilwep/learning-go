@@ -6,9 +6,15 @@ import (
 
 func input() float32 {
 	var temp float32
-	fmt.Print("\n[=] Enter the number: ")
-	fmt.Scan(&temp)
-	return temp
+	for {
+		fmt.Print("\n[=] Enter the number: ")
+		if _, err := fmt.Scan(&temp); err != nil {
+			fmt.Println("Invalid Input")
+			continue
+		}
+		return temp
+	}
+
 }
 
 func Add(res *float32) {
@@ -34,10 +40,24 @@ func Div(res *float32) {
 		println("\n\tCannot Divide by '0'")
 	}
 }
+func Power(res *float32) {
+
+	var x int
+	fmt.Print("\n[=] Enter the number: ")
+	fmt.Scan(&x)
+
+	var temp float32 = 1
+	for i := 1; i <= x; i++ {
+		temp = temp * *res
+	}
+
+	*res = temp
+}
 
 func main() {
 
 	var res float32 = 0 // this will be our result
+	res = input()
 
 	for {
 		// Get input for operations:
@@ -48,7 +68,8 @@ func main() {
 			"\n[+] Subtract: 2",
 			"\n[+] Multiply: 3",
 			"\n[+] Division: 4",
-			"\n[+] Exit: 5")
+			"\n[+] Power: 5",
+			"\n[+] Exit: 6")
 		fmt.Println("----------------------------")
 
 		fmt.Print("\n[=] Enter the Operations: ")
@@ -64,6 +85,9 @@ func main() {
 		case 4:
 			Div(&res)
 		case 5:
+			Power(&res)
+		case 6:
+			fmt.Println("Thanks for Using Calculator")
 			return
 		default:
 			fmt.Print("\n\t{Invalid Input}\n")
