@@ -1,11 +1,3 @@
-# Go-Basics:
-
-## Go-Commands: 
-```sh
-
-
-```
-
 ## Package:
 
 - A module is a collection of go packages.
