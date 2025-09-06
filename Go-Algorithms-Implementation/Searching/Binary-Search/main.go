@@ -20,7 +20,7 @@ func input() ([]int, int, int) {
 	return num, n, target
 }
 
-// Binary Search:
+// Binary Search: TC: O(log(n))
 func BinarySearch(nums []int, n, target int) int {
 	low, high := 0, n-1
 
