@@ -54,11 +54,12 @@
   * [Context + Channels: Cancelling/Timeouts](/Go-tutorial/Advance/Channels/Context_+_Channels/main.go)
   * [Time/Ticker Channels: Rate limiting, Scheduling](/Go-tutorial/Advance/Channels/Ticker_Time-Traker/main.go)
 
+
 ## Go-Algorithm Implementations:
 * **Searching:**
   * [Linear Search](/Go-Algorithms-Implementation/Searching/Linear-Search/main.go)
   * [Binary Search](/Go-Algorithms-Implementation/Searching/Binary-Search/main.go)
-* 
+* **Sorting:**
 * **Graph:**
 
 ## Resources: 
