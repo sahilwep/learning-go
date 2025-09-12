@@ -48,12 +48,7 @@
     * [Fan-out: Aggregate results](/Go-tutorial/Advance/Channels/fan-out/main.go)
     * [Directional Channel: Enforce send-only/receive-only](/Go-tutorial/Advance/Channels/Directional-Channel/main.go)
     * [Closed Channels: Graceful Completion](/Go-tutorial/Advance/Channels/Closed-Channels/main.go)
-    * [Nil-Channel: Disabling select case](/Go-tutorial/Advance/Channels/Nil-Channels/main.go)
-    * [Channel of Channels: Dynamic request/response](/Go-tutorial/Advance/Channels/Channel-of-Channels/main.go)
-    * [Channel in Struct: Job Control](/Go-tutorial/Advance/Channels/Channel-in-structs/main.go)
-    * [Context + Channels: Cancelling/Timeouts](/Go-tutorial/Advance/Channels/Context_+_Channels/main.go)
-    * [Time/Ticker Channels: Rate limiting, Scheduling](/Go-tutorial/Advance/Channels/Ticker_Time-Traker/main.go)
-
+  * [Context](/Go-tutorial/Advance/Context/main.go)
 
 ## Go-Algorithm Implementations:
 * **Searching:**
