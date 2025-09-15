@@ -19,8 +19,7 @@
 
 ```plain
 book-api/
-├─ cmd/
-|   └─main.go             # entry point
+├─ main.go                # entry point
 ├─ go.mod                 # module file
 ├─ /api                   # HTTP handlers
 │   └─ book_handler.go
