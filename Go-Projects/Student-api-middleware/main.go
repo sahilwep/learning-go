@@ -27,7 +27,6 @@ func main() {
 	r.GET("/student/:id", handler.GetStudent)
 	r.PUT("/student/:id", handler.UpdateStudent)
 	r.DELETE("/student/:id", handler.DeleteStudent)
-	r.GET("/student/crash", handler.CrashEndpoint) // Crash Endpoint -> crash function to show Recovery middleware use-case.
 
 	// Serve:
 	if err := r.Run(":8080"); err != nil {

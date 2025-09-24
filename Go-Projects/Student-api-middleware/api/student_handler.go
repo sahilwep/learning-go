@@ -16,16 +16,6 @@ func NewStudentHandler(service *service.StudentService) *StudentHandler {
 	return &StudentHandler{service: service}
 }
 
-// ------------------ Recovery Middleware use-case ------------------------
-func (s *StudentHandler) CrashEndpoint(c *gin.Context) {
-	var stu *model.Student
-
-	// OOPS: stu is nil, so this will panic (nil pointer dereference)
-	c.JSON(http.StatusOK, stu.Name)
-}
-
-// -------------------------------------------------------------------------
-
 // Create Student:
 func (s *StudentHandler) CreateStudent(c *gin.Context) {
 	var stu model.Student
