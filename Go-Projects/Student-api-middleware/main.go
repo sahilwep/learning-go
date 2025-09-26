@@ -14,7 +14,10 @@ func main() {
 	r := gin.Default() // Initialize router.
 
 	// Register middleware in recommended order:
-	r.Use(middleware.RecoveryMiddleware())
+	r.Use(
+		middleware.RecoveryMiddleware(), // recovery middleware
+		middleware.Logger(true),         // logger middleware -> {flag = true: we need our logs into files}
+	)
 
 	// Create pieces of applications:
 	stu := store.NewStudentStore()
