@@ -4,6 +4,7 @@ import (
 	"log"
 
 	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
 	"github.com/sahilwep/learning-go/Go-Projects/Student-api/api"
 	"github.com/sahilwep/learning-go/Go-Projects/Student-api/middleware"
 	"github.com/sahilwep/learning-go/Go-Projects/Student-api/service"
@@ -11,12 +12,21 @@ import (
 )
 
 func main() {
+
+	// Load .env file
+	if err := godotenv.Load(); err != nil {
+		log.Println("No .env file found or failed to load")
+	} else {
+		log.Println(".env file loaded successfully")
+	}
+
 	r := gin.Default() // Initialize router.
 
-	// Register middleware in recommended order:
+	// Register middleware in recommended order: Order matter
 	r.Use(
 		middleware.RecoveryMiddleware(), // recovery middleware
 		middleware.Logger(true),         // logger middleware -> {flag = true: we need our logs into files}
+		middleware.CORS(),               // handel cross origin
 	)
 
 	// Create pieces of applications:
