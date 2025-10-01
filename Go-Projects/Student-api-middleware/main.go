@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
@@ -24,9 +25,10 @@ func main() {
 
 	// Register middleware in recommended order: Order matter
 	r.Use(
-		middleware.RecoveryMiddleware(), // recovery middleware
-		middleware.Logger(true),         // logger middleware -> {flag = true: we need our logs into files}
-		middleware.CORS(),               // handel cross origin
+		middleware.RecoveryMiddleware(),                   // recovery middleware
+		middleware.Logger(true),                           // logger middleware -> {flag = true: we need our logs into files}
+		middleware.CORS(),                                 // handel cross origin
+		middleware.SimpleTimeoutMiddleware(8*time.Second), // Timeout Middleware
 	)
 
 	// Create pieces of applications:
