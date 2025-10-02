@@ -23,12 +23,13 @@ func main() {
 
 	r := gin.Default() // Initialize router.
 
-	// Register middleware in recommended order: Order matter
+	// Middleware order: recovery -> logger -> CORS -> rate limit -> timeout
 	r.Use(
-		middleware.RecoveryMiddleware(),                   // recovery middleware
-		middleware.Logger(true),                           // logger middleware -> {flag = true: we need our logs into files}
-		middleware.CORS(),                                 // handel cross origin
-		middleware.SimpleTimeoutMiddleware(8*time.Second), // Timeout Middleware
+		middleware.RecoveryMiddleware(),                    // recovery middleware
+		middleware.Logger(true),                            // logger middleware -> {flag = true: we need our logs into files}
+		middleware.CORS(),                                  // handel cross origin
+		middleware.RateLimiterMiddleware(5, 1*time.Minute), // 5 requests per minutes per IP
+		middleware.SimpleTimeoutMiddleware(8*time.Second),  // Timeout Middleware
 	)
 
 	// Create pieces of applications:
