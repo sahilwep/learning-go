@@ -51,7 +51,16 @@ func (s *StudentHandler) GetStudent(c *gin.Context) {
 // List ALL Available Student:
 func (s *StudentHandler) ListStudents(c *gin.Context) {
 	stu := s.service.List()
-	c.JSON(http.StatusOK, stu)
+
+	// If it's empty -> return "Empty message"
+	if len(stu) == 0 {
+		c.JSON(http.StatusOK, gin.H{
+			"Empty": "nothing to display",
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, stu) // else return data
 }
 
 // Update: PUT req
