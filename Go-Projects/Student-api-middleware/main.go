@@ -34,6 +34,7 @@ func main() {
 
 		// Custom Middlewares:
 		custom.APIKeyMiddleware("sahilwep"), // API key validations checks
+		custom.RequestIDMiddleware(),        // Inject Custom ID to header for better logging
 	)
 
 	// Create pieces of applications:
