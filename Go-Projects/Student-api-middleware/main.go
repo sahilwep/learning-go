@@ -8,6 +8,7 @@ import (
 	"github.com/joho/godotenv"
 	"github.com/sahilwep/learning-go/Go-Projects/Student-api/api"
 	"github.com/sahilwep/learning-go/Go-Projects/Student-api/middleware"
+	"github.com/sahilwep/learning-go/Go-Projects/Student-api/middleware/custom"
 	"github.com/sahilwep/learning-go/Go-Projects/Student-api/service"
 	"github.com/sahilwep/learning-go/Go-Projects/Student-api/store"
 )
@@ -30,6 +31,9 @@ func main() {
 		middleware.CORS(),                                  // handel cross origin
 		middleware.RateLimiterMiddleware(5, 1*time.Minute), // 5 requests per minutes per IP
 		middleware.SimpleTimeoutMiddleware(8*time.Second),  // Timeout Middleware
+
+		// Custom Middlewares:
+		custom.APIKeyMiddleware("sahilwep"), // API key validations checks
 	)
 
 	// Create pieces of applications:
