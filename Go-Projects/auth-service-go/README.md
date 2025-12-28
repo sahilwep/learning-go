@@ -52,3 +52,99 @@ sahilwep~$ curl http://localhost:8080/health
 - Extra:
   - In production we use Connection pool, not every time we write a logic to {connect -> query -> close}, instead we uses the concept of connection pool..
 
+## User + Password:
+- At this phase we will build:
+  - User Table (proper schema)
+  - Password hashing with bcrypt
+  - signup API
+  - Login API (no JWT yet)
+  - Zero Plaintext password ever.
+
+## Database Schema:
+- We are not adding everything we will add only the things which matters now.
+- Fields:
+  - id  -> Primary key
+  - email -> unique, login Identifier
+  - role -> authorizations later
+  - created_at
+  - Updated_at
+
+- We are not using migrations tool yet, first will do MySQL manual tool.
+
+### Connect to Postgres Container:
+
+```sh
+docker exec -it auth_postgres psql -U auth_user -d auth_db
+
+auth_db=#
+```
+- Now paste this SQL Carefully:
+
+```sql
+CREATE TABLE users (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    email TEXT NOT NULL UNIQUE,
+    password_hash TEXT NOT NULL,
+    role TEXT NOT NULL DEFAULT 'user',
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT now(),
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT now()
+);
+```
+
+- If `gen_random_uuid()` errors, run this first:
+
+```sql
+CREATE EXTENSION IF NOT EXISTS "pgcrypto";
+```
+
+- Then we can check:
+
+```sql
+\d                    -- to list database tables
+\d users              -- to list user table
+SELECT * FROM users;  -- to query into table
+\q                    -- to exit.
+```
+
+### Password Hashing:
+
+- First install bcrypt into the local system using: `go get golang.org/x/crypto/bcrypt`
+- Then we can write the logic inside the `internal/user/password.go`
+- While Writing logic make sure that Never decrypt password.
+- We only compare hash, bcrypt is slower by design making sure burteforce ineffective.
+
+### Database Layer:
+
+- Writing the logic for user repository (DB access layer)
+- Create file inside `internal/users/repository.go`
+- This will separate DB logic from HTTP logic, & makes testing possible.
+
+### Writing Singup API (First endpoint):
+- we will create a file insdie `internal/router/auth.go`.
+- We will Create one function `RegisterAuthRoutes()` which will bind incoming data with JSON & then hash that using bcrypt & then store into the DB.
+- Lastly we will wiring this logic into  `cmd/server/main.go` so that we can have our routes calling..
+
+### Testing:
+- After running a server & making sure that all the Docker images running.
+- We can test `/signup` endpoint with curl:
+
+```sh
+curl -X POST http://localhost:8080/signup \
+  -H "Content-Type: application/json" \
+  -d '{"email":"test@example.com","password":"secret123"}'
+
+{"message":"user created"}
+```
+
+- Confirm this with DB:
+
+```sh
+docker exec -it auth_postgres psql -U auth_user -d auth_db
+SELECT email, password_hash FROM users;
+```
+
+- As of now, our signup is working were user can signup thyself using {email, password} and {email, password} is stored into the DB after hashing.
+- NOTE: We haven't handel the input validations as of now.
+
+
+## Login + JWT (access & refresh)
